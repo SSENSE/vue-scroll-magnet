@@ -1,9 +1,9 @@
 <template>
   <div class="example">
-    <div class="example-magnet-container">
+    <div class="example-magnet-example-container">
       <scroll-magnet-container>
         <scroll-magnet-item>
-          <div class="example-magnet-item">
+          <div class="example-magnet-example-item">
             Scroll magnet content
           </div>
         </scroll-magnet-item>
@@ -33,14 +33,15 @@ export default {
   min-height: 200vh;
 }
 
-.example-magnet-container {
+.example-magnet-example-container {
   border: 1px solid #000;
   border-radius: 20px;
   padding: 20px;
   box-sizing: border-box;
+  min-height: 101vh;
 }
 
-.example-magnet-item {
+.example-magnet-example-item {
   background: #efefef;
   border-radius: 20px;
   padding: 20px;

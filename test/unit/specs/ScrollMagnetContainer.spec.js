@@ -2,40 +2,47 @@
 
 import Vue from 'vue';
 import ScrollMagnetContainer from 'src/components/ScrollMagnetContainer';
-import ScrollMagnetItem from 'src/components/ScrollMagnetItem';
+import { createAppContainer, simulateScroll } from '../utils';
+
+simulateScroll(0); // Reset scroll position
 
 describe('ScrollMagnetContainer.vue', () => {
   it('should mount successfully', () => {
     const ContainerInstance = Vue.extend(ScrollMagnetContainer);
-    const vm = new ContainerInstance().$mount();
-    expect(vm._isMounted).to.equal(true);
-  });
-
-  it('should mount successfully', () => {
-    const ContainerInstance = Vue.extend(ScrollMagnetContainer);
-    const vm = new ContainerInstance().$mount();
-    expect(vm._isMounted).to.equal(true);
+    createAppContainer();
+    Vue.component('scroll-magnet-container', ContainerInstance);
+    const vm = new Vue({
+      el: '#appInner',
+      template: '<scroll-magnet-container></scroll-magnet-container>'
+    });
+    vm.$mount;
+    expect(vm.$children[0]._isMounted).to.equal(true);
   });
 
   it('should update scrollTop attribute when scroll occurs', (done) => {
     const ContainerInstance = Vue.extend(ScrollMagnetContainer);
-    const vm = new ContainerInstance().$mount();
-    const scrollEvent = document.createEvent('CustomEvent');
-
-    scrollEvent.initCustomEvent('scroll', false, false, null);
-    document.body.style.minHeight = '10000px';
-    window.scrollTo(window.scrollX, 600);
-    window.pageYOffset = 600;
-    document.documentElement.scrollTop = 600;
-    window.dispatchEvent(scrollEvent);
-    expect(vm.scrollTop).to.equal(600);
+    createAppContainer();
+    Vue.component('scroll-magnet-container', ContainerInstance);
+    const vm = new Vue({
+      el: '#appInner',
+      template: '<scroll-magnet-container></scroll-magnet-container>'
+    });
+    vm.$mount;
+    simulateScroll(600);
+    expect(vm.$children[0].scrollTop).to.equal(600);
     done();
   });
 
   it('should unmount successfully', () => {
     const ContainerInstance = Vue.extend(ScrollMagnetContainer);
-    const vm = new ContainerInstance().$mount();
+    createAppContainer();
+    Vue.component('scroll-magnet-container', ContainerInstance);
+    const vm = new Vue({
+      el: '#appInner',
+      template: '<scroll-magnet-container></scroll-magnet-container>'
+    });
+    vm.$mount;
     vm.$destroy();
-    expect(vm._isDestroyed).to.equal(true);
+    expect(vm.$children[0]._isDestroyed).to.equal(true);
   });
 });

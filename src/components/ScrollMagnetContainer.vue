@@ -1,5 +1,5 @@
 <template>
-  <div class="scroll-magnet-container" style="height: 1000px;">
+  <div class="scroll-magnet-container" :style="`height: ${height}px;`">
     <slot></slot>
   </div>
 </template>
@@ -12,7 +12,7 @@
     data() {
       return {
         width: 0,
-        height: 'auto',
+        height: 0,
         offsetTop: 0,
         scrollTop: 0,
       };
@@ -36,6 +36,7 @@
       attachScroll() {
         window.addEventListener('scroll', () => {
           this.scrollTop = window.pageYOffset;
+          this.offsetTop = this.$el.getBoundingClientRect().top + window.pageYOffset;
         });
       },
       /**
@@ -49,9 +50,9 @@
        */
       getElementPosition() {
         const viewportOffset = this.$el.getBoundingClientRect();
-        this.offsetTop = viewportOffset.top + window.scrollY;
+        this.offsetTop = viewportOffset.top + window.pageYOffset;
         this.width = this.$el.clientWidth;
-        this.height = viewportOffset.height;
+        this.height = (this.$el.parentElement && this.$el.parentElement.clientHeight) || 0;
       },
     },
   };

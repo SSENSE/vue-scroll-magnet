@@ -12,12 +12,11 @@
     name: 'scroll-magnet-item',
     data() {
       return {
-        parent: null,
+        nearestContainer: undefined,
         width: 0,
         height: 0,
         scrollDist: 0,
         scrollEnd: 0,
-        isBottomed: false,
         isScrolling: false,
       };
     },
@@ -27,31 +26,12 @@
         default: 0,
       },
     },
-    computed: {
-      top() {
-        return this.isBottomed ? 'initial' : `${this.offsetTopPad}px`;
-      },
-      /**
-       * Scroll position is within the container's bounds
-       * @return {Boolean}
-       */
-      isWithinHeight() {
-        return (this.scrollDist < this.scrollEnd);
-      },
-      /**
-       * Magnet is stuck to the bottom of the container
-       * @return {Boolean}
-       */
-      isBottomed() {
-        return (this.scrollDist >= this.scrollEnd);
-      },
-    },
     created() {
-      this.parent = this.getNearestMagnetContainer();
+      this.nearestContainer = this.getNearestMagnetContainer();
 
       // Listen on changes to the scroll position from the parent and update the magnet's status
-      this.$watch('parent.scrollTop', () => {
-        this.setMagnetStatus(this.parent);
+      this.$watch('nearestContainer.scrollTop', () => {
+        this.setMagnetStatus(this.nearestContainer);
       });
     },
     mounted() {
@@ -59,7 +39,7 @@
       this.setMagnetHeight();
 
       this.$nextTick(() => {
-        this.setMagnetStatus(this.parent);
+        this.setMagnetStatus(this.nearestContainer);
         this.setMagnetWidth();
       });
     },
@@ -86,7 +66,7 @@
        * This will be used as an inline CSS property on the magnet
        */
       setMagnetWidth() {
-        this.width = this.$parent.width;
+        this.width = this.nearestContainer.width;
       },
       /**
        * Assign the magnet's height to match its content
@@ -100,13 +80,15 @@
       /**
        * Update the magnet's status while scrolling
        */
-      setMagnetStatus(parent) {
+      setMagnetStatus(nearestContainer) {
         this.setMagnetHeight(); // Recheck for any changes in magnet height
-
-        this.scrollDist = (parent.scrollTop + this.height);
-        this.scrollEnd = (parent.offsetTop + (parent.height - this.offsetTopPad));
+        this.scrollDist = (nearestContainer.scrollTop + this.height);
+        this.scrollEnd = (nearestContainer.offsetTop + (nearestContainer.height - this.offsetTopPad));
+        this.isBottomed = (this.scrollDist >= this.scrollEnd);
+        this.top = (this.isBottomed ? 'initial' : `${this.offsetTopPad}px`);
+        this.isWithinHeight = (this.scrollDist < this.scrollEnd);
         this.isScrolling = (
-          (parent.scrollTop + this.offsetTopPad) >= parent.offsetTop
+          (nearestContainer.scrollTop + this.offsetTopPad) >= nearestContainer.offsetTop
           && this.isWithinHeight
         );
       },
