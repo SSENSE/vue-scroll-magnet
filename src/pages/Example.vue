@@ -1,8 +1,25 @@
 <template>
-  <div class="example">
+  <div class="content">
+    <h1>Examples</h1>
+    <h2>Default, snap within parent container</h2>
     <div class="example-magnet-example-container">
       <scroll-magnet-container>
-        <scroll-magnet-item>
+        <scroll-magnet-item :offsetTopPad="20">
+          <div class="example-magnet-example-item">
+            Scroll magnet content
+          </div>
+        </scroll-magnet-item>
+      </scroll-magnet-container>
+    </div>
+    <div v-for="i in 5" class="paragraph">
+      <div v-for="x in 10" class="line"></div>
+    </div>
+    <div class="paragraph">
+      <div v-for="x in 10" class="line"></div>
+    </div>
+    <div class="example-magnet-example-container">
+      <scroll-magnet-container>
+        <scroll-magnet-item :offsetTopPad="20">
           <div class="example-magnet-example-item">
             Scroll magnet content
           </div>
@@ -13,55 +30,46 @@
 </template>
 
 <script>
-import ScrollMagnetContainer from '../components/ScrollMagnetContainer';
-import ScrollMagnetItem from '../components/ScrollMagnetItem';
-
 export default {
   name: 'example',
-  components: {
-    ScrollMagnetContainer,
-    ScrollMagnetItem,
-  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.example {
-  max-width: 500px;
-  margin: 0 auto;
-  min-height: 200vh;
+.example-offset-top-pad {
+  width: 100%;
+  background: rgba(79, 192, 141, 0.5);
+  position: fixed;
+  left: 0;
+  z-index: 1;
+  transition: 0.3s ease height;
 }
 
 .example-magnet-example-container {
-  border: 1px solid #000;
-  border-radius: 20px;
-  padding: 20px;
+  position: relative;
   box-sizing: border-box;
-  min-height: 101vh;
+  min-height: 50vh;
+  margin-bottom: 15px;
 }
 
 .example-magnet-example-item {
   background: #efefef;
-  border-radius: 20px;
   padding: 20px;
 }
 
-h1, h2 {
-  font-weight: normal;
+.paragraph {
+  margin-bottom: 80px;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
+.paragraph .line:last-child {
+  width: 70%;
 }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
+.line {
+  width: 100%;
+  height: 15px;
+  margin-bottom: 15px;
+  background: rgba(0, 0, 0, 0.1);
 }
 </style>
