@@ -50,8 +50,7 @@
        */
       getElementPosition() {
         const viewportOffset = this.$el.getBoundingClientRect();
-        const pageYOffset = (typeof window !== 'undefined') ? window.pageYOffset : 0;
-        this.offsetTop = viewportOffset.top + pageYOffset;
+        this.offsetTop = viewportOffset.top + window.pageYOffset;
         this.width = this.$el.clientWidth;
         this.height = (this.$el.parentElement && this.$el.parentElement.clientHeight) || 0;
       },
