@@ -18,9 +18,7 @@
       };
     },
     created() {
-      if (typeof window !== 'undefined') {
-        this.attachScroll();
-      }
+      this.attachScroll();
     },
     mounted() {
       this.getElementPosition();
@@ -34,16 +32,20 @@
        * Child scroll magnets will listen on this scroll value to determine their position
        */
       attachScroll() {
-        window.addEventListener('scroll', () => {
-          this.scrollTop = window.pageYOffset;
-          this.offsetTop = this.$el.getBoundingClientRect().top + window.pageYOffset;
-        });
+        if (typeof window !== 'undefined') {
+          window.addEventListener('scroll', () => {
+            this.scrollTop = window.pageYOffset;
+            this.offsetTop = this.$el.getBoundingClientRect().top + window.pageYOffset;
+          });
+        }
       },
       /**
        * Remove the scroll event listener
        */
       detachScroll() {
-        window.removeEventListener('scroll', () => {});
+        if (typeof window !== 'undefined') {
+          window.removeEventListener('scroll', () => {});
+        }
       },
       /**
        * Get the container's dimensions and offset and update data attributes
