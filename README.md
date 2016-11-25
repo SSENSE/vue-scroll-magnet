@@ -51,13 +51,6 @@ In the example below, &lt;scroll-magnet-container&gt; will automatically use the
 </div>
 ```
 
-### Development
-To run a local dev server, clone this repo and run:
-``` bash
-npm install
-npm run dev
-```
-
 ### Tests
 To run unit tests & code coverage:
 ``` bash
