@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 import Vue from 'vue';
-import ScrollMagnetContainer from 'src/components/ScrollMagnetContainer';
+import ScrollMagnetContainer from '../../../src/ScrollMagnetContainer.vue';
 import { createAppContainer, simulateScroll } from '../utils';
 
 simulateScroll(0); // Reset scroll position
@@ -13,7 +13,7 @@ describe('ScrollMagnetContainer.vue', () => {
     Vue.component('scroll-magnet-container', ContainerInstance);
     const vm = new Vue({
       el: '#appInner',
-      template: '<scroll-magnet-container></scroll-magnet-container>'
+      template: '<scroll-magnet-container></scroll-magnet-container>',
     });
     vm.$mount;
     expect(vm.$children[0]._isMounted).to.equal(true);

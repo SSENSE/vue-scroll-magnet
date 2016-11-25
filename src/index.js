@@ -1,7 +1,7 @@
 /* eslint-disable */
 
-var ScrollMagnetContainer = require('./src/components/ScrollMagnetContainer.vue'),
-    ScrollMagnetItem = require('./src/components/ScrollMagnetItem.vue');
+var ScrollMagnetContainer = require('./ScrollMagnetContainer.vue'),
+    ScrollMagnetItem = require('./ScrollMagnetItem.vue');
 
 module.exports = {
   install: function(Vue) {

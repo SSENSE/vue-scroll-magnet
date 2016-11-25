@@ -1,8 +1,8 @@
 /* eslint-disable */
 
 import Vue from 'vue';
-import ScrollMagnetContainer from 'src/components/ScrollMagnetContainer';
-import ScrollMagnetItem from 'src/components/ScrollMagnetItem';
+import ScrollMagnetContainer from '../../../src/ScrollMagnetContainer';
+import ScrollMagnetItem from '../../../src/ScrollMagnetItem';
 import { createAppContainer, simulateScroll } from '../utils';
 
 describe('ScrollMagnetItem.vue', () => {
