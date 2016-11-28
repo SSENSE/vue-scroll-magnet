@@ -8,7 +8,8 @@ config.output.filename = 'vue-scroll-magnet.min.js'
 
 config.plugins = (config.plugins || []).concat([
   new webpack.optimize.UglifyJsPlugin({
-      compress: { warnings: false }
+      compress: { warnings: false },
+      sourceMap: false
   }),
   new CopyWebpackPlugin([
     { from: './src/ScrollMagnetContainer.vue' },
