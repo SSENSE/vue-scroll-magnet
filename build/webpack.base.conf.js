@@ -44,8 +44,7 @@ module.exports = {
   },
   vue: {
     loaders: {
-      js: 'babel!eslint',
-      css: 'css-loader'
+      js: 'babel!eslint'
     }
   },
   plugins: [

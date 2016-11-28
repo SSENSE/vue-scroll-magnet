@@ -1,9 +1,9 @@
 {
   "name": "vue-scroll-magnet",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Wrappers for Vue components which follow the viewport while scrolling within the bounds of their parent container",
   "author": "Todd Beauchamp <toddbee@gmail.com>",
-  "main": "dist/vue-scroll-magnet.min.js",
+  "main": "src/index.js",
   "scripts": {
     "build": "webpack --config build/webpack.min.conf.js",
     "unit": "./node_modules/.bin/karma start test/unit/karma.conf.js --single-run",
