@@ -2,23 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://github.com/toddlawton/docs/index.html</loc>
-    
-    <lastmod>2016-11-29T22:22:16.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://github.com/toddlawton/2016/11/29/a/</loc>
-    
-    <lastmod>2016-11-29T22:15:04.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://github.com/toddlawton/examples/index.html</loc>
     
-    <lastmod>2016-11-29T22:01:06.000Z</lastmod>
+    <lastmod>2016-11-29T23:45:59.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://github.com/toddlawton/docs/index.html</loc>
+    
+    <lastmod>2016-11-29T23:40:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://github.com/toddlawton/vue-scroll-magnet/2016/11/29/a/</loc>
+    
+    <lastmod>2016-11-29T22:15:04.000Z</lastmod>
     
   </url>
   

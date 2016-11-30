@@ -1,13 +1,62 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Examples · Vue Scroll Magnet</title><meta name="description" content="Examples - @toddlawton"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://github.com/toddlawton/atom.xml" title="Vue Scroll Magnet"></head><body><div class="wrap"><header><a href="/docs" class="logo-link"><p><b>Vue Scroll Magnet</b></p></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/docs/" target="_self" class="nav-list-link">DOCS</a></li><li class="nav-list-item"><a href="/examples/" target="_self" class="nav-list-link">EXAMPLES</a></li><li class="nav-list-item"><a href="https://github.com/toddlawton/vue-scroll-magnet" target="_blank" class="nav-list-link">GITHUB</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">Examples</h1><div class="post-info">Nov 29, 2016</div><div class="post-content"><p><div class="content"></div></p>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Examples · Vue Scroll Magnet</title><meta name="description" content="Examples - @toddlawton"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/vue-scroll-magnet/favicon.png"><link rel="stylesheet" href="/vue-scroll-magnet/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://github.com/toddlawton/atom.xml" title="Vue Scroll Magnet"></head><body><div class="wrap"><header><a href="/vue-scroll-magnet/docs" class="logo-link"><p><b>Vue Scroll Magnet</b></p></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/vue-scroll-magnet/docs/" target="_self" class="nav-list-link">DOCS</a></li><li class="nav-list-item"><a href="/vue-scroll-magnet/examples/" target="_self" class="nav-list-link">EXAMPLES</a></li><li class="nav-list-item"><a href="https://github.com/toddlawton/vue-scroll-magnet" target="_blank" class="nav-list-link">GITHUB</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><div class="post-content"><h1 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h1><h2 id="Basic-example"><a href="#Basic-example" class="headerlink" title="Basic example"></a>Basic example</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"example-container"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">scroll-magnet-container</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">scroll-magnet-item</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"example-sticky-item"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"text"</span>&gt;</span>This item will stick as you scroll!<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">scroll-magnet-item</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">scroll-magnet-container</span>&gt;</span></div><div class="line">  <span class="comment">&lt;!-- Placeholder paragraphs --&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.example-container</span> &#123;</div><div class="line">  <span class="attribute">min-height</span>: <span class="number">600px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.example-item</span> &#123;</div><div class="line">  <span class="attribute">min-height</span>: <span class="number">200px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<style>
+  .paragraphs {
+    margin-bottom: 40px;
+  }
+
+  .paragraph {
+    width: 100%;
+    min-height: 15px;
+    background: rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+  }
+  .paragraph.short {
+    width: 80%;
+  }
+  .example-container {
+    min-height: 600px;
+  }
+  .example-item {
+    position: relative;
+    font-size: 24px;
+    text-align: center;
+    width: 100%;
+    min-height: 200px;
+    background: #34495e;
+    color: white;
+  }
+  .text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+</style>
+
+<div class="content"></div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js"></script>
 <script type="text/javascript" src="https://cdn.rawgit.com/toddlawton/vue-scroll-magnet/master/dist/vue-scroll-magnet.min.js"></script>
 <script type="text/javascript">
+  function paragraphs(ct) {
+    var paras = '';
+    var short = '';
+    for (var i = 0; i <= ct; i++) {
+      if (i === ct) {
+        short = ' short';
+      }
+      paras += '<div class="paragraph'+short+'"></div>';
+    }
+    return '<div class="paragraphs">' + paras +  '</div>';
+  }
+
   new Vue({
     el: '.content',
     components: {
       'scroll-magnet-container': VueScrollMagnet.ScrollMagnetContainer,
       'scroll-magnet-item': VueScrollMagnet.ScrollMagnetItem
     },
-    template: '<div style="background: red; height: 2000px;"><scroll-magnet-container><scroll-magnet-item>Yo</scroll-magnet-item></scroll-magnet-container></div>'
+    template: '<div class="example-container"><scroll-magnet-container><scroll-magnet-item><div class="example-item"><div class="text">This item will stick as you scroll!</div></div></scroll-magnet-item></scroll-magnet-container>'+ paragraphs(20) + paragraphs(20) +'</div>'
   });
 </script></div></article></div></section><footer><div class="paginator"></div><div class="copyright"><p>© 2016 <a href="http://github.com/toddlawton">@toddlawton</a></p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
