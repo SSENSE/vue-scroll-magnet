@@ -98,6 +98,10 @@
 </script>
 
 <style scoped>
+  .scroll-magnet-item {
+    position: relative;
+  }
+
   .is-scrolling {
     position: fixed;
     top: 0;
