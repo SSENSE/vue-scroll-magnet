@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Vue Scroll Magnet</title>
   <subtitle>Vue Scroll Magnet</subtitle>
-  <link href="/atom.xml" rel="self"/>
+  <link href="/vue-scroll-magnet/atom.xml" rel="self"/>
   
   <link href="http://github.com/toddlawton/"/>
   <updated>2016-11-29T22:15:04.000Z</updated>
