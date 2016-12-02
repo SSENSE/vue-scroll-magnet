@@ -6,7 +6,6 @@
 
 <script>
   /* eslint-disable no-undef */
-
   export default {
     name: 'scroll-magnet-container',
     data() {
@@ -15,16 +14,41 @@
         height: 0,
         offsetTop: 0,
         scrollTop: 0,
+        mutationObserver: null,
+        target: null,
       };
+    },
+    props: {
+      targetElement: {
+        type: String,
+        default: '',
+        required: false,
+      },
     },
     created() {
       this.attachScroll();
+      this.attachResize();
     },
     mounted() {
+      // Assign a target element to the container. This element will be used as a reference
+      // for the height of the scrollable area.
+      if (!this.targetElement) {
+        // If no prop is provided, use the parent element of <scroll-magnet-container>
+        this.target = this.$el.parentElement;
+      } else {
+        // Find the element by its selector and assign it as the target
+        const $el = document.querySelector(this.targetElement);
+        if ($el) {
+          this.target = $el;
+        }
+      }
       this.getElementPosition();
+      this.attachMutationObserver();
     },
     destroyed() {
       this.detachScroll();
+      this.detachResize();
+      this.detachMutationObserver();
     },
     methods: {
       /**
@@ -34,8 +58,7 @@
       attachScroll() {
         if (typeof window !== 'undefined') {
           window.addEventListener('scroll', () => {
-            this.scrollTop = window.pageYOffset;
-            this.offsetTop = this.$el.getBoundingClientRect().top + window.pageYOffset;
+            this.recalcAttributes();
           });
         }
       },
@@ -48,14 +71,95 @@
         }
       },
       /**
+       * Attach the resize event listener
+       */
+      attachResize() {
+        if (typeof window !== 'undefined') {
+          window.addEventListener('resize', () => {
+            this.recalcAttributes();
+          });
+        }
+      },
+      /**
+       * Remove the resize event listener
+       */
+      detachResize() {
+        if (typeof window !== 'undefined') {
+          window.removeEventListener('resize', () => {});
+        }
+      },
+      /**
+       * A mutation observer is used to detect changes to the containing node
+       * in order to keep the magnet container in sync with the height its reference node.
+       */
+      attachMutationObserver() {
+        if (typeof window !== 'undefined') {
+          const MutationObserver = window.MutationObserver
+           || window.WebKitMutationObserver
+           || window.MozMutationObserver;
+
+          if (MutationObserver) {
+            const config = { attributes: true };
+
+            this.mutationObserver = new MutationObserver(() => {
+              // When the reference element changes, we must recompute the scroll attributes
+              this.getElementPosition({ recalcHeight: true });
+
+              // The child magnet item listens for changes to this.scrollTop in this component
+              // to update itself. this.scrollTop is manually adjusted so that the child updates
+              // when the parent does.
+              this.scrollTop = this.getScrollY() + 1;
+              this.$nextTick(() => { this.scrollTop = this.getScrollY(); });
+            });
+            if (this.target) {
+              this.mutationObserver.observe(this.target, config);
+            }
+          }
+        }
+      },
+      /**
+       * Stop listening to mutation changes
+       */
+      detachMutationObserver() {
+        if (this.mutationObserver) {
+          this.mutationObserver.disconnect();
+        }
+      },
+      /**
        * Get the container's dimensions and offset and update data attributes
        */
-      getElementPosition() {
+      getElementPosition(options) {
+        const recalcHeight = (options && options.recalcHeight) || false;
         const viewportOffset = this.$el.getBoundingClientRect();
-        const pageYOffset = (typeof window !== 'undefined') ? window.pageYOffset : 0;
-        this.offsetTop = viewportOffset.top + pageYOffset;
+        const scrollY = this.getScrollY();
+
+        this.offsetTop = viewportOffset.top + scrollY;
         this.width = this.$el.clientWidth;
-        this.height = (this.$el.parentElement && this.$el.parentElement.clientHeight) || 0;
+
+        if (!this.height > 0 || recalcHeight) {
+          this.height = (this.target && this.target.clientHeight) || 0;
+        }
+      },
+      /**
+       * Recalculate the scroll container's attributes such as current
+       * scroll position, offsetTop, and height
+       */
+      recalcAttributes() {
+        this.scrollTop = this.getScrollY();
+        this.getElementPosition({ recalcHeight: true });
+        this.offsetTop = this.$el.getBoundingClientRect().top + this.getScrollY();
+      },
+      /**
+       * Get the current scroll position
+       * @return {number} Scroll position
+       */
+      getScrollY() {
+        if (typeof window === 'undefined') {
+          return 0;
+        }
+
+        // pageYOffset for IE compatibility
+        return window.pageYOffset || window.scrollY;
       },
     },
   };
