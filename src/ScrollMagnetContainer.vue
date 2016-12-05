@@ -19,7 +19,7 @@
       };
     },
     props: {
-      targetElement: {
+      boundsElementSelector: {
         type: String,
         default: '',
         required: false,
@@ -32,16 +32,17 @@
     mounted() {
       // Assign a target element to the container. This element will be used as a reference
       // for the height of the scrollable area.
-      if (!this.targetElement) {
+      if (!this.boundsElementSelector) {
         // If no prop is provided, use the parent element of <scroll-magnet-container>
         this.target = this.$el.parentElement;
       } else {
         // Find the element by its selector and assign it as the target
-        const $el = document.querySelector(this.targetElement);
+        const $el = document.querySelector(this.boundsElementSelector);
         if ($el) {
           this.target = $el;
         }
       }
+
       this.getElementPosition();
       this.attachMutationObserver();
     },
@@ -58,7 +59,8 @@
       attachScroll() {
         if (typeof window !== 'undefined') {
           window.addEventListener('scroll', () => {
-            this.recalcAttributes();
+            this.getScrollPosition();
+            this.getElementPosition();
           });
         }
       },
@@ -76,7 +78,8 @@
       attachResize() {
         if (typeof window !== 'undefined') {
           window.addEventListener('resize', () => {
-            this.recalcAttributes();
+            this.getScrollPosition();
+            this.getElementPosition({ recalcWidth: true, recalcHeight: true });
           });
         }
       },
@@ -103,7 +106,7 @@
 
             this.mutationObserver = new MutationObserver(() => {
               // When the reference element changes, we must recompute the scroll attributes
-              this.getElementPosition({ recalcHeight: true });
+              this.getElementPosition({ recalcWidth: true, recalcHeight: true });
 
               // The child magnet item listens for changes to this.scrollTop in this component
               // to update itself. this.scrollTop is manually adjusted so that the child updates
@@ -127,26 +130,27 @@
       },
       /**
        * Get the container's dimensions and offset and update data attributes
+       * @param  {object} options Configuration object for options
        */
       getElementPosition(options) {
+        const recalcWidth = (options && options.recalcWidth) || false;
         const recalcHeight = (options && options.recalcHeight) || false;
-        const viewportOffset = this.$el.getBoundingClientRect();
-        const scrollY = this.getScrollY();
 
-        this.offsetTop = viewportOffset.top + scrollY;
-        this.width = this.$el.clientWidth;
+        this.offsetTop = this.$el.getBoundingClientRect().top + this.getScrollY();
+
+        if (!this.width > 0 || recalcWidth) {
+          this.width = (this.$el && this.$el.clientWidth) || 0;
+        }
 
         if (!this.height > 0 || recalcHeight) {
           this.height = (this.target && this.target.clientHeight) || 0;
         }
       },
       /**
-       * Recalculate the scroll container's attributes such as current
-       * scroll position, offsetTop, and height
+       * Recalculate the scroll container's position
        */
-      recalcAttributes() {
+      getScrollPosition() {
         this.scrollTop = this.getScrollY();
-        this.getElementPosition({ recalcHeight: true });
         this.offsetTop = this.$el.getBoundingClientRect().top + this.getScrollY();
       },
       /**

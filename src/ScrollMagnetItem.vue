@@ -1,7 +1,7 @@
 <template>
   <div
     class="scroll-magnet-item"
-    v-bind:style="`width: ${width}px; top: ${top}`"
+    v-bind:style="`width: ${width > 0 && width}px; top: ${top}`"
     v-bind:class="{ 'is-scrolling': isScrolling, 'is-bottomed': isBottomed }">
     <slot></slot>
   </div>
@@ -29,11 +29,6 @@
     },
     created() {
       this.nearestContainer = this.getNearestMagnetContainer();
-
-      // Listen on changes to the scroll position from the parent and update the magnet's status
-      this.$watch('nearestContainer.scrollTop', () => {
-        this.setMagnetStatus(this.nearestContainer);
-      });
     },
     mounted() {
       // Get and set initial state dependend on DOM attributes
@@ -42,6 +37,16 @@
       this.$nextTick(() => {
         this.setMagnetStatus(this.nearestContainer);
         this.setMagnetWidth();
+      });
+
+      // Listen on changes to the parent container's width and update the item's width accordingly
+      this.$watch('nearestContainer.width', () => {
+        this.width = this.nearestContainer.width;
+      });
+
+      // Listen on changes to the scroll position from the parent and update the magnet's status
+      this.$watch('nearestContainer.scrollTop', () => {
+        this.setMagnetStatus(this.nearestContainer);
       });
     },
     methods: {
@@ -83,15 +88,13 @@
        */
       setMagnetStatus(nearestContainer) {
         this.setMagnetHeight(); // Recheck for any changes in magnet height
-        this.scrollDist = (nearestContainer.scrollTop + this.height);
-        this.scrollEnd = (nearestContainer.offsetTop + (nearestContainer.height - this.offsetTopPad));
-        this.isBottomed = (this.scrollDist >= this.scrollEnd);
-        this.top = (this.isBottomed ? 'initial' : `${this.offsetTopPad}px`);
-        this.isWithinHeight = (this.scrollDist < this.scrollEnd);
-        this.isScrolling = (
-          (nearestContainer.scrollTop + this.offsetTopPad) >= nearestContainer.offsetTop
-          && this.isWithinHeight
-        );
+
+        this.scrollDist = (nearestContainer.scrollTop + this.height); // The distance scrolled within the bounds (Number)
+        this.scrollEnd = (nearestContainer.offsetTop + (nearestContainer.height - this.offsetTopPad)); // The maximum scrollable distance (Number)
+        this.isWithinHeight = (this.scrollDist < this.scrollEnd); // Is the item still within the bounds? (Boolean)
+        this.isScrolling = ((nearestContainer.scrollTop + this.offsetTopPad) >= nearestContainer.offsetTop && this.isWithinHeight); // Is the item currently scrolling? (Boolean)
+        this.isBottomed = (this.scrollDist >= this.scrollEnd); // Should the item stick to the bottom of the bounds? (Boolean)
+        this.top = (this.isBottomed ? 'initial' : `${this.offsetTopPad}px`); // Item's CSS top value (Number)
       },
     },
   };
@@ -100,6 +103,7 @@
 <style scoped>
   .scroll-magnet-item {
     position: relative;
+    width: 100%;
   }
 
   .is-scrolling {
