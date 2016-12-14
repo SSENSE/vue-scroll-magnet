@@ -15,8 +15,10 @@
         nearestContainer: undefined,
         width: 0,
         height: 0,
+        top: 0,
         scrollDist: 0,
         scrollEnd: 0,
+        isBottomed: false,
         isScrolling: false,
       };
     },
@@ -94,7 +96,7 @@
         this.isWithinHeight = (this.scrollDist < this.scrollEnd); // Is the item still within the bounds? (Boolean)
         this.isScrolling = ((nearestContainer.scrollTop + this.offsetTopPad) >= nearestContainer.offsetTop && this.isWithinHeight); // Is the item currently scrolling? (Boolean)
         this.isBottomed = (this.scrollDist >= this.scrollEnd); // Should the item stick to the bottom of the bounds? (Boolean)
-        this.top = (this.isBottomed ? 'initial' : `${this.offsetTopPad}px`); // Item's CSS top value (Number)
+        this.top = (this.isBottomed ? 'auto' : `${this.offsetTopPad}px`); // Item's CSS top value (Number)
       },
     },
   };
