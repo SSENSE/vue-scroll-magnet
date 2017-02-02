@@ -47,8 +47,10 @@
       this.attachMutationObserver()
     },
     beforeUpdate() {
-      this.getScrollPosition();
-      this.getElementPosition({ recalcWidth: true, recalcHeight: true });
+      this.$nextTick(() => {
+        this.getScrollPosition();
+        this.getElementPosition({ recalcWidth: true, recalcHeight: true });
+      });
     },
     destroyed() {
       this.detachScroll()
