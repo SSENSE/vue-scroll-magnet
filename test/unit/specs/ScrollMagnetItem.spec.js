@@ -34,7 +34,7 @@ describe('ScrollMagnetItem.vue', () => {
       expect($item.nearestContainer).to.equal(vm.$children[0]);
       expect($item.width).to.equal($item.nearestContainer.$el.clientWidth);
       expect($item.height).to.equal(0);
-      expect($item.scrollDist).to.equal(0);
+      expect($item.scrollDist).to.equal(600);
       expect($item.scrollEnd).to.equal(($item.nearestContainer.offsetTop + ($item.nearestContainer.height - $item.offsetTopPad)));
       expect($item.isBottomed).to.equal(false);
       expect($item.isScrolling).to.equal(false);
