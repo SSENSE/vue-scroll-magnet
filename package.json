@@ -1,6 +1,6 @@
 {
   "name": "vue-scroll-magnet",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Wrappers for Vue components which follow the viewport while scrolling within the bounds of their parent container",
   "author": "Todd Beauchamp <toddbee@gmail.com>",
   "main": "src/index.js",
