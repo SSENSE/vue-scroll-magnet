@@ -64,7 +64,7 @@
        */
       attachScroll() {
         if (typeof window !== "undefined") {
-          window.addEventListener("scroll", () => {
+          this.scrollListener = window.addEventListener("scroll", () => {
             this.getScrollPosition()
             this.getElementPosition()
           })
@@ -75,7 +75,7 @@
        */
       detachScroll() {
         if (typeof window !== "undefined") {
-          window.removeEventListener("scroll", () => {})
+          window.removeEventListener("scroll", this.scrollListener)
         }
       },
       /**
@@ -83,9 +83,11 @@
        */
       attachResize() {
         if (typeof window !== "undefined") {
-          window.addEventListener("resize", () => {
-            this.getScrollPosition()
-            this.getElementPosition({ recalcWidth: true, recalcHeight: true })
+          this.resizeListener = window.addEventListener("resize", () => {
+            setTimeout(() => {
+              this.getScrollPosition()
+              this.getElementPosition({ recalcWidth: true, recalcHeight: true })
+            }, 16)
           })
         }
       },
@@ -94,7 +96,7 @@
        */
       detachResize() {
         if (typeof window !== "undefined") {
-          window.removeEventListener("resize", () => {})
+          window.removeEventListener("resize", this.resizeListener)
         }
       },
       /**
