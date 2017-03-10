@@ -171,7 +171,7 @@
         }
 
         // pageYOffset for IE compatibility
-        return window.pageYOffset || window.scrollY
+        return window.scrollY || window.pageYOffset
       },
     },
   }
